@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.94 scan initiated Sat Sep 06 12:00:00 2025 as: nmap -sV -sC -oX scan_b.xml 10.0.0.0/24 -->
+<nmaprun scanner="nmap" args="nmap -sV -sC -oX scan_b.xml 10.0.0.0/24" start="1757160000" startstr="Sat Sep 06 12:00:00 2025" version="7.94" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="1000" services="1-1024"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1757160001" endtime="1757160070">
+<status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="10.0.0.5" addrtype="ipv4"/>
+<hostnames>
+<hostname name="web-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="closed" count="997">
+<extrareasons reason="resets" count="997"/>
+</extraports>
+<port protocol="tcp" portid="22">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="ssh" product="OpenSSH" version="9.6p1 Ubuntu-3ubuntu13.5" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10">
+<cpe>cpe:/a:openbsd:openssh:9.6p1</cpe>
+<cpe>cpe:/o:linux:linux_kernel</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="80">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="http" product="nginx" version="1.18.0" extrainfo="Ubuntu" method="probed" conf="10">
+<cpe>cpe:/a:igor_sysoev:nginx:1.18.0</cpe>
+</service>
+<script id="http-title" output="Welcome to web-01"/>
+</port>
+<port protocol="tcp" portid="443">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="http" product="nginx" version="1.25.3" tunnel="ssl" method="probed" conf="10">
+<cpe>cpe:/a:igor_sysoev:nginx:1.25.3</cpe>
+</service>
+<script id="ssl-poodle" output="VULNERABLE:&#10;  SSL POODLE information leak&#10;    State: VULNERABLE&#10;    IDs:  CVE:CVE-2014-3566&#10;    The SSL protocol 3.0 uses nondeterministic CBC padding."/>
+</port>
+</ports>
+<times srtt="1100" rttvar="500" to="100000"/>
+</host>
+<host starttime="1757160001" endtime="1757160072">
+<status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="10.0.0.10" addrtype="ipv4"/>
+<hostnames>
+<hostname name="db-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="closed" count="998">
+<extrareasons reason="resets" count="998"/>
+</extraports>
+<port protocol="tcp" portid="22">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="ssh" product="OpenSSH" version="8.9p1 Ubuntu-3ubuntu0.6" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10">
+<cpe>cpe:/a:openbsd:openssh:8.9p1</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="3306">
+<state state="filtered" reason="no-response" reason_ttl="0"/>
+<service name="mysql" method="table" conf="3"/>
+</port>
+</ports>
+<times srtt="1400" rttvar="800" to="100000"/>
+</host>
+<host starttime="1757160001" endtime="1757160090">
+<status state="up" reason="echo-reply" reason_ttl="127"/>
+<address addr="10.0.0.20" addrtype="ipv4"/>
+<hostnames>
+<hostname name="dc-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="filtered" count="994">
+<extrareasons reason="no-responses" count="994"/>
+</extraports>
+<port protocol="tcp" portid="88">
+<state state="open" reason="syn-ack" reason_ttl="127"/>
+<service name="kerberos-sec" product="Microsoft Windows Kerberos" extrainfo="server time: 2025-09-06 12:01:00Z" method="probed" conf="10">
+<cpe>cpe:/o:microsoft:windows</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="389">
+<state state="open" reason="syn-ack" reason_ttl="127"/>
+<service name="ldap" product="Microsoft Windows Active Directory LDAP" extrainfo="Domain: lab.local, Site: Default-First-Site-Name" method="probed" conf="10">
+<cpe>cpe:/o:microsoft:windows</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="445">
+<state state="open" reason="syn-ack" reason_ttl="127"/>
+<service name="microsoft-ds" method="probed" conf="10">
+<cpe>cpe:/o:microsoft:windows</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="3389">
+<state state="open" reason="syn-ack" reason_ttl="127"/>
+<service name="ms-wbt-server" product="Microsoft Terminal Services" tunnel="ssl" method="probed" conf="10">
+<cpe>cpe:/o:microsoft:windows</cpe>
+</service>
+</port>
+</ports>
+<os>
+<osmatch name="Microsoft Windows Server 2019" accuracy="96">
+<osclass type="server" vendor="Microsoft" osfamily="Windows" osgen="2019" accuracy="96">
+<cpe>cpe:/o:microsoft:windows_server_2019</cpe>
+</osclass>
+</osmatch>
+</os>
+<hostscript>
+<script id="smb-os-discovery" output="OS: Windows Server 2019 Standard 17763 (Windows Server 2019 Standard 6.3); Computer name: dc-01; NetBIOS computer name: DC-01; Domain name: lab.local; FQDN: dc-01.lab.local"/>
+</hostscript>
+<times srtt="900" rttvar="400" to="100000"/>
+</host>
+<runstats>
+<finished time="1757160400" timestr="Sat Sep 06 12:06:40 2025" summary="Nmap done at Sat Sep 06 12:06:40 2025; 256 IP addresses (3 hosts up) scanned in 400.00 seconds" elapsed="400.00" exit="success"/>
+<hosts up="3" down="253" total="256"/>
+</runstats>
+</nmaprun>

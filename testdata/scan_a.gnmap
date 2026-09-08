@@ -1,0 +1,8 @@
+# Nmap 7.94 scan initiated Sat Aug 30 12:00:00 2025 as: nmap -sV -oG scan_a.gnmap 10.0.0.0/24
+Host: 10.0.0.5 (web-01.lab.local)	Status: Up
+Host: 10.0.0.5 (web-01.lab.local)	Ports: 22/open/tcp//ssh//OpenSSH 8.9p1 Ubuntu-3ubuntu0.6 (Ubuntu Linux; protocol 2.0)/, 80/open/tcp//http//nginx 1.18.0/	Ignored State: closed (998)
+Host: 10.0.0.10 (db-01.lab.local)	Status: Up
+Host: 10.0.0.10 (db-01.lab.local)	Ports: 22/open/tcp//ssh//OpenSSH 8.9p1 Ubuntu-3ubuntu0.6/, 3306/open/tcp//mysql//MySQL 8.0.35/	Ignored State: closed (998)
+Host: 10.0.0.15 (legacy-01.lab.local)	Status: Up
+Host: 10.0.0.15 (legacy-01.lab.local)	Ports: 21/open/tcp//ftp//vsftpd 2.3.4/	Ignored State: closed (999)
+# Nmap done at Sat Aug 30 12:05:00 2025 -- 256 IP addresses (3 hosts up) scanned in 300.00 seconds

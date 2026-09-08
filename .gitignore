@@ -1,0 +1,6 @@
+/wmap
+/wmap.exe
+/dist/
+*.test
+*.out
+coverage*

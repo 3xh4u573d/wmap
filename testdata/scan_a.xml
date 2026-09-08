@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.94 scan initiated Sat Aug 30 12:00:00 2025 as: nmap -sV -sC -oX scan_a.xml 10.0.0.0/24 -->
+<nmaprun scanner="nmap" args="nmap -sV -sC -oX scan_a.xml 10.0.0.0/24" start="1756555200" startstr="Sat Aug 30 12:00:00 2025" version="7.94" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="1000" services="1-1024"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1756555201" endtime="1756555260">
+<status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="10.0.0.5" addrtype="ipv4"/>
+<hostnames>
+<hostname name="web-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="closed" count="998">
+<extrareasons reason="resets" count="998"/>
+</extraports>
+<port protocol="tcp" portid="22">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="ssh" product="OpenSSH" version="8.9p1 Ubuntu-3ubuntu0.6" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10">
+<cpe>cpe:/a:openbsd:openssh:8.9p1</cpe>
+<cpe>cpe:/o:linux:linux_kernel</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="80">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="http" product="nginx" version="1.18.0" extrainfo="Ubuntu" method="probed" conf="10">
+<cpe>cpe:/a:igor_sysoev:nginx:1.18.0</cpe>
+</service>
+<script id="http-title" output="Welcome to web-01"/>
+</port>
+</ports>
+<times srtt="1200" rttvar="600" to="100000"/>
+</host>
+<host starttime="1756555201" endtime="1756555262">
+<status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="10.0.0.10" addrtype="ipv4"/>
+<hostnames>
+<hostname name="db-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="closed" count="998">
+<extrareasons reason="resets" count="998"/>
+</extraports>
+<port protocol="tcp" portid="22">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="ssh" product="OpenSSH" version="8.9p1 Ubuntu-3ubuntu0.6" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10">
+<cpe>cpe:/a:openbsd:openssh:8.9p1</cpe>
+</service>
+</port>
+<port protocol="tcp" portid="3306">
+<state state="open" reason="syn-ack" reason_ttl="63"/>
+<service name="mysql" product="MySQL" version="8.0.35" method="probed" conf="10">
+<cpe>cpe:/a:mysql:mysql:8.0.35</cpe>
+</service>
+</port>
+</ports>
+<times srtt="1300" rttvar="700" to="100000"/>
+</host>
+<host starttime="1756555201" endtime="1756555264">
+<status state="up" reason="echo-reply" reason_ttl="62"/>
+<address addr="10.0.0.15" addrtype="ipv4"/>
+<hostnames>
+<hostname name="legacy-01.lab.local" type="PTR"/>
+</hostnames>
+<ports>
+<extraports state="closed" count="999">
+<extrareasons reason="resets" count="999"/>
+</extraports>
+<port protocol="tcp" portid="21">
+<state state="open" reason="syn-ack" reason_ttl="62"/>
+<service name="ftp" product="vsftpd" version="2.3.4" method="probed" conf="10">
+<cpe>cpe:/a:vsftpd:vsftpd:2.3.4</cpe>
+</service>
+<script id="ftp-anon" output="Anonymous FTP login allowed (FTP code 230)"/>
+</port>
+</ports>
+<os>
+<osmatch name="Linux 2.6.32" accuracy="94">
+<osclass type="general purpose" vendor="Linux" osfamily="Linux" osgen="2.6.X" accuracy="94">
+<cpe>cpe:/o:linux:linux_kernel:2.6.32</cpe>
+</osclass>
+</osmatch>
+</os>
+<times srtt="2100" rttvar="900" to="100000"/>
+</host>
+<runstats>
+<finished time="1756555500" timestr="Sat Aug 30 12:05:00 2025" summary="Nmap done at Sat Aug 30 12:05:00 2025; 256 IP addresses (3 hosts up) scanned in 300.00 seconds" elapsed="300.00" exit="success"/>
+<hosts up="3" down="253" total="256"/>
+</runstats>
+</nmaprun>
