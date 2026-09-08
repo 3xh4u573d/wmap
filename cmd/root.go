@@ -47,8 +47,8 @@ func newRoot() *cobra.Command {
   wmap -i scan.xml -hu                http(s) URLs only, any port (8443, ...)
   wmap -i scan.xml -uA                http+https for every open port
   wmap -i scan.xml -hu --filtered     http(s) URLs on filtered ports
-  wmap -i old.xml -i new.xml -d       what changed (+/- ports, ~ versions)
-  wmap -i old.xml -i new.xml -d -h    hosts that appeared / vanished
+  wmap -d old.xml new.xml             what changed (+/- ports, ~ versions)
+  wmap -d -h old.xml new.xml          hosts that appeared / vanished
   wmap -i scan.xml -u -v              URLs, each annotated (cut -f1 to undo)
   wmap -i a.xml -i b.xml -u -o urls.txt
 
@@ -70,7 +70,7 @@ diff give the rich views.`,
 	f.BoolVarP(&ef.allPorts, "all-ports", "A", false, "with -u: http+https URL for every matching port")
 	f.BoolVar(&ef.httpURLs, "http-urls", false, "output: only http:// and https:// URLs  (same as -h -u)")
 	f.BoolVar(&ef.urlsAll, "urls-all", false, "output: http+https for every matching port  (same as -u -A)")
-	f.BoolVarP(&ef.diff, "diff", "d", false, "diff two -i inputs (old then new): +/- ports, ~ version changes")
+	f.BoolVarP(&ef.diff, "diff", "d", false, "diff two scan files given as arguments: wmap -d OLD NEW")
 	f.BoolVar(&ef.open, "open", false, "only open ports  (this is the default)")
 	f.BoolVar(&ef.filtered, "filtered", false, "only filtered ports")
 	f.BoolVarP(&ef.names, "names", "n", false, "use the resolved hostname instead of the IP")
@@ -87,14 +87,24 @@ func runExtract(cmd *cobra.Command, args []string, ef *extractFlags) error {
 	if cmd.Flags().NFlag() == 0 && len(args) == 0 {
 		return cmd.Help()
 	}
-	if len(ef.inputs) == 0 {
-		return errors.New("no input: pass -i/--input <nmap xml or gnmap file>")
-	}
-	if ef.diff && len(ef.inputs) != 2 {
-		return fmt.Errorf("diff needs exactly two -i inputs (old then new); got %d", len(ef.inputs))
+
+	var inputs, portArgs []string
+	if ef.diff {
+		if len(ef.inputs) > 0 {
+			return errors.New("with -d, pass the two scan files as arguments: wmap -d OLD NEW")
+		}
+		if len(args) < 2 {
+			return errors.New("diff needs two scan files: wmap -d OLD NEW")
+		}
+		inputs, portArgs = args[:2], args[2:]
+	} else {
+		if len(ef.inputs) == 0 {
+			return errors.New("no input: pass -i/--input <nmap xml or gnmap file>")
+		}
+		inputs, portArgs = ef.inputs, args
 	}
 
-	ports, err := parsePortArgs(args)
+	ports, err := parsePortArgs(portArgs)
 	if err != nil {
 		return err
 	}
@@ -102,7 +112,7 @@ func runExtract(cmd *cobra.Command, args []string, ef *extractFlags) error {
 	if err != nil {
 		return err
 	}
-	scans, err := parse.Files(ef.inputs)
+	scans, err := parse.Files(inputs)
 	if err != nil {
 		return err
 	}

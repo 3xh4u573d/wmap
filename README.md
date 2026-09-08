@@ -14,20 +14,10 @@ macOS and Linux.
 go install github.com/3xh4u573d/wmap@latest
 ```
 
-The repository is private, so Go needs to fetch it directly rather than through
-the module proxy:
-
-```
-export GOPRIVATE=github.com/3xh4u573d/*
-go install github.com/3xh4u573d/wmap@latest
-```
-
-git must be able to authenticate to github.com (SSH key or a credential helper).
-
 From a checkout:
 
 ```
-git clone git@github.com:3xh4u573d/wmap.git
+git clone https://github.com/3xh4u573d/wmap.git
 cd wmap && go build -o wmap .
 ```
 
@@ -45,7 +35,7 @@ wmap -i scan.xml -h 80,443,8000-8100   hosts with any of those open
 wmap -i scan.xml -u                    a URL per service (http, https, smb, ssh, mysql, ...)
 wmap -i scan.xml -hu                   http and https URLs only, on any port
 wmap -i scan.xml -uA                   http+https for every open TCP port
-wmap -i old.xml -i new.xml -d          what changed between two scans
+wmap -d old.xml new.xml                what changed between two scans
 wmap -i scan.xml -u -v                 annotate each line
 wmap -i a.xml -i b.xml -u -o urls.txt  write to a file
 ```
@@ -60,7 +50,7 @@ wmap -i a.xml -i b.xml -u -o urls.txt  write to a file
     --http-urls     output http/https URLs only         (= -h -u, i.e. -hu)
 -A, --all-ports     with -u, emit http+https per port    (= -u -A, i.e. -uA)
     --urls-all      = -u -A
--d, --diff          diff two -i inputs, old then new
+-d, --diff          diff two scan files given as arguments: wmap -d OLD NEW
     --open          open ports only (default)
     --filtered      filtered ports only
 -n, --names         use the resolved hostname instead of the IP
@@ -72,18 +62,19 @@ wmap -i a.xml -i b.xml -u -o urls.txt  write to a file
 
 ### Diff
 
-`-d` takes exactly two `-i` files, old then new. On its own it lists
-port-level changes:
+`-d` takes two scan files as positional arguments, old then new. On its own it
+lists port-level changes:
 
 ```
-$ wmap -i mon.xml -i tue.xml -d
+$ wmap -d mon.xml tue.xml
 +10.0.0.20:445
 -10.0.0.15:21
 ~10.0.0.5:22   # OpenSSH 8.9p1 -> OpenSSH 9.6p1
 ```
 
-`-d -h` gives host-level, `-d -u` and `-d -hu` give URL-level. Exit status is
-1 when anything differs, 0 when the two scans match.
+`-d -h` gives host-level, `-d -u` and `-d -hu` give URL-level. A trailing port
+argument narrows it: `wmap -d mon.xml tue.xml 443`. Exit status is 1 when
+anything differs, 0 when the two scans match.
 
 ### Verbose
 
